@@ -31,8 +31,14 @@ def getWeather(request):
             data = resp.json()
 
             if resp.status_code == 200:
+                lat = data['coord']['lat']
+                lon = data['coord']['lon']
+                geoUrl = f"http://api.openweathermap.org/geo/1.0/reverse?lat={lat}&lon={lon}&limit=5&appid={API_KEY}"
+                geoResp = requests.get(geoUrl, timeout = 5)
+                geoData = geoResp.json()
+                    
                 weather = {
-                    'city': f"{data['name']}, {data['sys']['country']}",
+                    'city': f"{data['name']}{f' - {geoData[0]['state']}' if geoData and geoData[0].get("state") else ''}, {data['sys']['country']}",
                     'temperature': data['main']['temp'],
                     'humidity': data['main']['humidity'],
                     'feelsLike': data['main']['feels_like'],
