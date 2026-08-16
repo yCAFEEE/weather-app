@@ -133,7 +133,7 @@ export default function Home(){
                 <button
                   key={idx} 
                   onClick={() => {
-                    setCity(`${c.name}, ${c.country}`);
+                    setCity('');
                     setCities([]);
                     setLat(c.lat);
                     setLon(c.lon);
