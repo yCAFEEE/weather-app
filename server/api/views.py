@@ -52,3 +52,33 @@ def getWeather(request):
                 return JsonResponse({'error': data.get("message", 'Could not fetch weather data')}, status = 404)
         except requests.RequestException:
             return JsonResponse({'error': "Network error."}, status = 500)
+
+@csrf_exempt
+def getCities(request):
+    cities = []
+
+    if request.method == "POST":
+        cityName = request.POST.get("city", '').strip()
+        if cityName:
+            url = f"http://api.openweathermap.org/geo/1.0/direct?q={cityName}&limit=5&appid={API_KEY}"
+        else:
+            return JsonResponse({'error': "City name is empty."}, status = 400)
+        try:
+            resp = requests.get(url, timeout = 5)
+            data = resp.json()
+
+            if resp.status_code == 200:
+                for item in data:
+                    cities.append({
+                        'name': item.get('name'),
+                        'state': item.get('state'),
+                        'country': item.get('country'),
+                        'lat': item.get('lat'),
+                        'lon': item.get('lon')
+                    })
+
+                return JsonResponse({'cities': cities})
+            else:
+                return JsonResponse({'error': data.get("message", "Could not fetch cities data")}, status = 404)
+        except requests.RequestException:
+            return JsonResponse({'error': "Network error."}, status = 500)
