@@ -48,6 +48,8 @@ export default function Home(){
         setWeather(data.weather);
         setError(null);
         setCities([]);
+        setLat('');
+        setLon('');
       }else{
         setWeather(null);
         setError(data.error);
@@ -139,7 +141,7 @@ export default function Home(){
                     setLon(c.lon);
                     handleSubmit(null, `${c.name}, ${c.country}`, c.lat, c.lon);
                   }}
-                >{c.name} {c.state}, {c.country}</button>
+                >{c.name}{c.state ? ` - ${c.state}` : ''}, {c.country}</button>
               )) }
             </div>
           )}
