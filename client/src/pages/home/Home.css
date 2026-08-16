@@ -66,6 +66,25 @@ form #city-name::placeholder{
     color: var(--white);
 }
 
+.cities-suggestions-container{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    gap: 2px;
+    top: calc(100%);
+}
+
+.cities-suggestions-container button{
+    padding: 10px;
+    background-color: var(--gray-hint);
+    border: none;
+    border-radius: 2px;
+}
+
+.cities-suggestions-container button:hover{
+    background-color: var(--light-sky-blue);
+}
+
 main{
     min-width: 30vw;
     display: flex;
