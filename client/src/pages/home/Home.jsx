@@ -5,6 +5,9 @@ const API = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000/';
 
 export default function Home(){
   const [city, setCity] = useState('');
+  const [cities, setCities] = useState([]);
+  const [lat, setLat] = useState('');
+  const [lon, setLon] = useState('');
   const [units, setUnits] = useState('metric');
   const [weather, setWeather] = useState(null);
   const [error, setError] = useState(null);
@@ -27,7 +30,7 @@ export default function Home(){
 
   const toggleTheme = () => { setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light')) }
   
-  const handleSubmit = async(e) => {
+  const handleSubmit = async(e, overrideCity = city, overrideLat = lat, overrideLon = lon) => {
     if(e) e.preventDefault();
 
     try{
@@ -37,13 +40,14 @@ export default function Home(){
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: new URLSearchParams({ city, units }),
+        body: new URLSearchParams({ city: overrideCity, units, lat: overrideLat, lon: overrideLon }),
       });
       const data = await response.json();
 
       if(response.ok){
         setWeather(data.weather);
         setError(null);
+        setCities([]);
       }else{
         setWeather(null);
         setError(data.error);
@@ -54,6 +58,41 @@ export default function Home(){
       setWeather(null)
     }
   };
+
+  useEffect(() => {
+    const fetchCities = async () => {
+      if(city.trim().length < 2){
+        setCities([]);
+        return;
+      }
+      
+      try{
+        const response = await fetch(`${API}search-cities/`, {
+          method: 'POST',
+          mode: 'cors',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: new URLSearchParams({ city })
+        });
+        const data = await response.json();
+        if(response.ok && data.cities){
+          setCities(data.cities);
+        }else{
+          setCities([]);
+        }
+      }catch(err){
+        console.log("Error fetching cities: ", err);
+        setCities([]);
+      }
+    };
+
+    const timer = setTimeout(() => {
+      fetchCities();
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [city]);
 
   useEffect(() => {
     if(weather){ 
@@ -88,6 +127,22 @@ export default function Home(){
             onChange={(e) => setCity(e.target.value)}
           />
           <button type='submit'>Get weather</button>
+          {cities && (
+            <div className='cities-suggestions-container'>
+              {cities.map((c, idx) => (
+                <button
+                  key={idx} 
+                  onClick={() => {
+                    setCity(`${c.name}, ${c.country}`);
+                    setCities([]);
+                    setLat(c.lat);
+                    setLon(c.lon);
+                    handleSubmit(null, `${c.name}, ${c.country}`, c.lat, c.lon);
+                  }}
+                >{c.name} {c.state}, {c.country}</button>
+              )) }
+            </div>
+          )}
         </form>
       </header>
       
