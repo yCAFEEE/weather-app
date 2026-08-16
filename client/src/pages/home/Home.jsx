@@ -126,7 +126,7 @@ export default function Home(){
             value={city}
             onChange={(e) => setCity(e.target.value)}
           />
-          <button type='submit'>Get weather</button>
+          <button id='get-weather-button' type='submit'>Get weather</button>
           {cities && (
             <div className='cities-suggestions-container'>
               {cities.map((c, idx) => (

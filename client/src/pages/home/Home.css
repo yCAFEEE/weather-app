@@ -35,6 +35,7 @@ header{
 #search-form{
     display: flex;
     flex-direction: row;
+    position: relative;
     padding: 10px;
     align-items: center;
     gap: 5px;
@@ -52,7 +53,7 @@ form #city-name::placeholder{
     color: var(--light-gray);
 }
 
-#search-form button{
+#get-weather-button{
     padding: 10px;
     background-color: var(--gray-hint);
     border: none;
@@ -60,7 +61,7 @@ form #city-name::placeholder{
     transition: 0.5s;
 }
 
-#search-form button:hover{
+#get-weather-button:hover{
     background-color: var(--light-sky-blue);
     color: var(--white);
 }
