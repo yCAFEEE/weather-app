@@ -5,6 +5,7 @@ const API = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000/';
 
 export default function Home(){
   const [city, setCity] = useState('');
+  const [cityName, setCityName] = useState('');
   const [cities, setCities] = useState([]);
   const [lat, setLat] = useState('');
   const [lon, setLon] = useState('');
@@ -50,6 +51,7 @@ export default function Home(){
         setCities([]);
         setLat('');
         setLon('');
+        if(!overrideLat) setCityName('');
       }else{
         setWeather(null);
         setError(data.error);
@@ -139,6 +141,7 @@ export default function Home(){
                     setCities([]);
                     setLat(c.lat);
                     setLon(c.lon);
+                    setCityName(`${c.name}${c.state ? ` - ${c.state}` : ''}, ${c.country}`);
                     handleSubmit(null, `${c.name}, ${c.country}`, c.lat, c.lon);
                   }}
                 >{c.name}{c.state ? ` - ${c.state}` : ''}, {c.country}</button>
@@ -155,7 +158,7 @@ export default function Home(){
               <button className={units === 'metric' ? 'active' : ''} onClick={() => setUnits('metric')}>C°</button>
               <button className={units === 'imperial' ? 'active' : ''}  onClick={() => setUnits('imperial')}>F°</button>
             </div>
-            <h1>{weather.city}</h1>
+            <h1>{cityName ? cityName : weather.city}</h1>
             <div className='temp-container'>
               <img src={`https://openweathermap.org/img/wn/${weather.icon}@2x.png`} alt="Weather icon" />
               <h1>{weather.temperature} {tempSymbol}</h1>
