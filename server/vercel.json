@@ -14,5 +14,10 @@
       "src": "/(.*)",
       "dest": "project/wsgi.py"
     }
-  ]
+  ],
+  "git": {
+    "deploymentEnabled": {
+      "gh-pages": false
+    }
+  }
 }
