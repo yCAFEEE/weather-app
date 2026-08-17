@@ -192,6 +192,10 @@ export default function Home(){
       <footer>
         <div className='footer-container'>
           <p>Developed by <a href='https://github.com/yCAFEEE'>yCAFEEE</a> (Yuri Daniel).</p>
+          <div className='openweather-credits'>
+            <p>Powered by:</p>
+            <a href='https://openweathermap.org/'><img src={theme === 'light' ? '/weather-app/OpenWeather-Logo.png' : '/weather-app/OpenWeather-Negative-Logo.png'}/></a>
+          </div>
         </div>
       </footer>
     </>
