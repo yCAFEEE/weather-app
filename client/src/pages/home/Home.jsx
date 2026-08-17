@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './Home.css';
 
 const API = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000/';
@@ -12,6 +12,8 @@ export default function Home(){
   const [units, setUnits] = useState('metric');
   const [weather, setWeather] = useState(null);
   const [error, setError] = useState(null);
+
+  const lastQueryRef = useRef({ city:'', lat:'', lon:'' })
 
   const [theme, setTheme] = useState (() =>{
     const savedTheme = localStorage.getItem('theme');
@@ -33,6 +35,8 @@ export default function Home(){
   
   const handleSubmit = async(e, overrideCity = city, overrideLat = lat, overrideLon = lon) => {
     if(e) e.preventDefault();
+
+    lastQueryRef.current = { city: overrideCity, lat: overrideLat, lon: overrideLon }
 
     try{
       const response = await fetch(API, {
@@ -99,8 +103,9 @@ export default function Home(){
   }, [city]);
 
   useEffect(() => {
-    if(weather){ 
-      handleSubmit();
+    if(weather){
+      const { city: lastCity, lat: lastLat, lon: lastLon } = lastQueryRef.current;
+      handleSubmit(null, lastCity, lastLat, lastLon);
     }
   }, [units]);
   
