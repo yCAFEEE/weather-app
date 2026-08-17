@@ -116,7 +116,7 @@ export default function Home(){
     var localMinutes = String(localTime.getUTCMinutes()).padStart(2, '0');
   }
 
-  const tempSymbol = units === "metric" ? "C°" : "F°";
+  const tempSymbol = units === "metric" ? "°C" : "°F";
   return (
     <>
       <header>
@@ -160,8 +160,8 @@ export default function Home(){
         {weather && (
           <div className='weather-container'>
             <div className="units-toggle">
-              <button className={units === 'metric' ? 'active' : ''} onClick={() => setUnits('metric')}>C°</button>
-              <button className={units === 'imperial' ? 'active' : ''}  onClick={() => setUnits('imperial')}>F°</button>
+              <button className={units === 'metric' ? 'active' : ''} onClick={() => setUnits('metric')}>°C</button>
+              <button className={units === 'imperial' ? 'active' : ''}  onClick={() => setUnits('imperial')}>°F</button>
             </div>
             <h1>{cityName ? cityName : weather.city}</h1>
             <div className='temp-container'>
