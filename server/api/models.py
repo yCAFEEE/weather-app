@@ -11,6 +11,8 @@ class WeatherInfo(models.Model):
     visibility = models.IntegerField(null = True, blank = True)
     windSpeed = models.IntegerField(null = True, blank = True)
     dt = models.IntegerField(null = True, blank = True)
+    sunrise = models.IntegerField(null = True, blank = True)
+    sunset = models.IntegerField(null = True, blank = True)
     timezone = models.IntegerField(null = True, blank = True)
     description = models.CharField(max_length = 300, null = True, blank = True)
 

@@ -48,6 +48,8 @@ def getWeather(request):
                     'visibility': data.get('visibility'),
                     'windSpeed': data['wind']['speed'],
                     'dt': data['dt'],
+                    'sunrise': data['sys']['sunrise'],
+                    'sunset': data['sys']['sunset'],
                     'timezone': data['timezone'],
                     'description': data['weather'][0]['description'].title(),
                     'icon': data['weather'][0]['icon'],

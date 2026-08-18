@@ -109,11 +109,16 @@ export default function Home(){
     }
   }, [units]);
   
-  let localTime;
+  let localTimeDt;
+  let sunriseDt;
+  let sunsetDt;
   if(weather){
-    localTime = new Date((weather.dt + weather.timezone) * 1000);
-    var localHours = String(localTime.getUTCHours()).padStart(2, '0');
-    var localMinutes = String(localTime.getUTCMinutes()).padStart(2, '0');
+    localTimeDt = new Date((weather.dt + weather.timezone) * 1000);
+    sunriseDt = new Date((weather.sunrise + weather.timezone) * 1000);
+    sunsetDt = new Date((weather.sunset + weather.timezone) * 1000);
+    var localTime = String(localTimeDt.getUTCHours()).padStart(2, '0') + ':' + String(localTimeDt.getUTCMinutes()).padStart(2, '0');
+    var sunriseTime = String(sunriseDt.getUTCHours()).padStart(2, '0') + ':' + String(sunriseDt.getUTCMinutes()).padStart(2, '0');
+    var sunsetTime = String(sunsetDt.getUTCHours()).padStart(2, '0') + ':' + String(sunsetDt.getUTCMinutes()).padStart(2, '0');
   }
 
   const tempSymbol = units === "metric" ? "°C" : "°F";
@@ -171,7 +176,13 @@ export default function Home(){
             <div className='desc-container'>
               <h2>{weather.description}</h2>
             </div>
-            <h2>Local time: {localHours + ":" + localMinutes}</h2>
+            <div className='local-time-container'>
+              <h3>Local time: {localTime}</h3>
+              <div className='sun-info'>
+                <h3>🌅  Sunrise: {sunriseTime}</h3>
+                <h3>🌇  Sunset: {sunsetTime}</h3>
+              </div>
+            </div>
             <div className='weather-overview-container'>
               <p>Humidity: {weather.humidity}%</p>
               <p>Feel: {weather.feelsLike} {tempSymbol}</p>

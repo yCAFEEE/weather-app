@@ -138,6 +138,16 @@ main{
     justify-content: center;
 }
 
+.local-time-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+}
+
+.local-time-container h3{
+    font-size: 1.25em;
+}
+
 .weather-overview-container{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
