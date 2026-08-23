@@ -184,25 +184,25 @@ export default function Home(){
               </div>
             </div>
             <div className='weather-overview-container'>
-              <div id='humidity'>
-                <p className='weather-label'>Humidity</p>
-                <p className='weather-value'>{weather.humidity}%</p>
-              </div>
               <div id='feel'>
                 <p className='weather-label'>Feel</p>
                 <p className='weather-value'>{weather.feelsLike} {tempSymbol}</p>
-              </div>
-              <div id='min-temp'>
-                <p className='weather-label'>Min temperature</p>
-                <p className='weather-value'>{weather.tempMin} {tempSymbol}</p>
               </div>
               <div id='max-temp'>
                 <p className='weather-label'>Max temperature</p>
                 <p className='weather-value'>{weather.tempMax} {tempSymbol}</p>
               </div>
-              <div id='pressure'>
-                <p className='weather-label'>Pressure</p>
-                <p className='weather-value'>{weather.pressure} hPa</p>
+              <div id='min-temp'>
+                <p className='weather-label'>Min temperature</p>
+                <p className='weather-value'>{weather.tempMin} {tempSymbol}</p>
+              </div>
+              <div id='humidity'>
+                <p className='weather-label'>Humidity</p>
+                <p className='weather-value'>{weather.humidity}%</p>
+              </div>
+              <div id='wind'>
+                <p className='weather-label'>Wind speed</p>
+                <p className='weather-value'>{units === "metric" ? `${(weather.windSpeed * 3.6).toFixed(2)} km/h` : `${weather.windSpeed} mph`}</p>
               </div>
               {weather.visibility &&
                 <div id='visibility'>
@@ -210,9 +210,9 @@ export default function Home(){
                   <p className='weather-value'>{units === "metric" ? `${weather.visibility / 1000} km` : `${((weather.visibility / 1000) / 1.609).toFixed(2)} mi`}</p>
                 </div>
               }
-              <div id='wind'>
-                <p className='weather-label'>Wind speed</p>
-                <p className='weather-value'>{units === "metric" ? `${(weather.windSpeed * 3.6).toFixed(2)} km/h` : `${weather.windSpeed} mph`}</p>
+              <div id='pressure'>
+                <p className='weather-label'>Pressure</p>
+                <p className='weather-value'>{weather.pressure} hPa</p>
               </div>
             </div>
           </div>
