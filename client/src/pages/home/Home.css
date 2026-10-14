@@ -186,10 +186,6 @@ footer{
     align-items: center;
 }
 
-.footer-container a{
-    color: var(--light-sky-blue);
-}
-
 .openweather-credits{
     display: flex;
     flex-direction: row;
